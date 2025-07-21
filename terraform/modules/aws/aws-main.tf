@@ -42,9 +42,6 @@ locals {
 }
 
 
-provider "aws" {
-  region = var.aws_region
-}
 
 # Base Infrastructure Module (VPC, Subnets, NAT Gateways)
 module "base_infra" {
