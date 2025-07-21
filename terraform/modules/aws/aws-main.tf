@@ -41,6 +41,76 @@ locals {
   dns_records = merge(local.public_dns_records, local.internal_dns_records)
 }
 
+
+provider "aws" {
+  region = var.aws_region
+}
+
+# Base Infrastructure Module (VPC, Subnets, NAT Gateways)
+module "base_infra" {
+  count = var.create_vpc ? 1 : 0
+  
+  source = "./base-infra"
+
+  vpc_name             = var.vpc_name
+  vpc_cidr             = var.vpc_cidr
+  availability_zones   = var.availability_zones
+  public_subnet_cidrs  = var.public_subnet_cidrs
+  private_subnet_cidrs = var.private_subnet_cidrs
+  enable_nat_gateway   = var.enable_nat_gateway
+  single_nat_gateway   = var.single_nat_gateway
+  enable_dns_hostnames = var.enable_dns_hostnames
+  enable_dns_support   = var.enable_dns_support
+  environment          = var.environment
+  project_name         = var.project_name
+}
+
+# Data sources to get existing VPC info when create_vpc = false
+data "aws_vpc" "existing" {
+  count = var.create_vpc ? 0 : 1
+  
+  filter {
+    name   = "tag:Name"
+    values = [var.vpc_name]
+  }
+}
+
+data "aws_subnets" "public" {
+  count = var.create_vpc ? 0 : 1
+  
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.existing[0].id]
+  }
+  
+  filter {
+    name   = "tag:Type"
+    values = ["Public"]
+  }
+}
+
+data "aws_subnets" "private" {
+  count = var.create_vpc ? 0 : 1
+  
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.existing[0].id]
+  }
+  
+  filter {
+    name   = "tag:Type"
+    values = ["Private"]
+  }
+}
+
+# Local values to use either created or existing resources
+locals {
+  vpc_id                    = var.create_vpc ? module.base_infra[0].vpc_id : data.aws_vpc.existing[0].id
+  public_subnet_ids         = var.create_vpc ? module.base_infra[0].public_subnet_ids : data.aws_subnets.public[0].ids
+  private_subnet_ids        = var.create_vpc ? module.base_infra[0].private_subnet_ids : data.aws_subnets.private[0].ids
+}
+
+
 module "aws-resource-creation" {
 
   #source = "github.com/mosip/mosip-infra//deployment/v3/terraform/aws/modules/aws-resource-creation?ref=develop"
@@ -395,3 +465,4 @@ module "nfs-setup" {
   K8S_INFRA_BRANCH    = var.K8S_INFRA_BRANCH
   CLUSTER_NAME        = var.CLUSTER_NAME
 }
+
