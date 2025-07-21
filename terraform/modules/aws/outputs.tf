@@ -46,15 +46,15 @@ output "vpc_cidr_block" {
 }
 
 # Subnet Information
-output "public_subnet_ids" {
-  description = "IDs of the public subnets"
-  value       = local.public_subnet_ids
-}
+# output "public_subnet_ids" {
+#   description = "IDs of the public subnets"
+#   value       = local.public_subnet_ids
+# }
 
-output "private_subnet_ids" {
-  description = "IDs of the private subnets"
-  value       = local.private_subnet_ids
-}
+# output "private_subnet_ids" {
+#   description = "IDs of the private subnets"
+#   value       = local.private_subnet_ids
+# }
 
 # NAT Gateway Information (only when VPC is created)
 output "nat_gateway_ids" {
