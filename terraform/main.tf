@@ -41,6 +41,18 @@ variable "RANCHER_IMPORT_URL" {}
 variable "MOSIP_EMAIL_ID" {}
 variable "SUBDOMAIN_PUBLIC" {}
 variable "SUBDOMAIN_INTERNAL" {}
+# terraform/modules/aws/base-infra/variables.tf
+variable "vpc_name" {}
+variable "vpc_cidr" {}
+variable "availability_zones" {}
+variable "public_subnet_cidrs" {}
+variable "private_subnet_cidrs" {}
+variable "enable_nat_gateway" {}
+variable "single_nat_gateway" {}
+variable "enable_dns_hostnames" {}
+variable "enable_dns_support" {}
+variable "environment" {}
+variable "project_name" {}
 
 # provider "aws" {
 #   region = var.AWS_PROVIDER_REGION
@@ -80,6 +92,18 @@ module "aws" {
   MOSIP_EMAIL_ID                = var.MOSIP_EMAIL_ID
   SUBDOMAIN_PUBLIC              = var.SUBDOMAIN_PUBLIC
   SUBDOMAIN_INTERNAL            = var.SUBDOMAIN_INTERNAL
+  vpc_name             = var.vpc_name
+  vpc_cidr             = var.vpc_cidr
+  availability_zones   = var.availability_zones
+  public_subnet_cidrs  = var.public_subnet_cidrs
+  private_subnet_cidrs = var.private_subnet_cidrs
+  enable_nat_gateway   = var.enable_nat_gateway
+  single_nat_gateway   = var.single_nat_gateway
+  enable_dns_hostnames = var.enable_dns_hostnames
+  enable_dns_support   = var.enable_dns_support
+  environment          = var.environment
+  project_name         = var.project_name
+
 
 }
 
@@ -93,3 +117,5 @@ module "aws" {
 #   source = "./modules/gcp"
 #   count  = var.cloud_provider == "gcp" ? 1 : 0
 # }
+
+
