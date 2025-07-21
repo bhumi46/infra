@@ -50,7 +50,7 @@ SUBDOMAIN_INTERNAL = ["admin", "iam", "activemq", "kafka", "kibana", "postgres",
 aws_region = "us-east-1"
 
 # Infrastructure Control - Set to true for initial VPC creation
-create_vpc = false  # Default to false - set to true only for initial setup
+create_vpc = false # Default to false - set to true only for initial setup
 
 # VPC Configuration (used only when create_vpc = true)
 vpc_name             = "mosip-boxes"
@@ -60,13 +60,13 @@ public_subnet_cidrs  = ["10.0.0.0/24", "10.0.1.0/24", "10.0.2.0/24"]
 private_subnet_cidrs = ["10.0.3.0/24", "10.0.4.0/24", "10.0.5.0/24"]
 
 # NAT Gateway Configuration
-enable_nat_gateway   = true
-single_nat_gateway   = false  # Set to true for cost optimization (single NAT for all AZs)
+enable_nat_gateway = true
+single_nat_gateway = false # Set to true for cost optimization (single NAT for all AZs)
 
 # DNS Configuration
 enable_dns_hostnames = true
 enable_dns_support   = true
 
 # Environment Configuration
-environment    = "dev"
-project_name   = "mosip"
+environment  = "dev"
+project_name = "mosip"

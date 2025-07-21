@@ -46,7 +46,7 @@ locals {
 # Base Infrastructure Module (VPC, Subnets, NAT Gateways)
 module "base_infra" {
   count = var.create_vpc ? 1 : 0
-  
+
   source = "./base-infra"
 
   vpc_name             = var.vpc_name
@@ -65,7 +65,7 @@ module "base_infra" {
 # Data sources to get existing VPC info when create_vpc = false
 data "aws_vpc" "existing" {
   count = var.create_vpc ? 0 : 1
-  
+
   filter {
     name   = "tag:Name"
     values = [var.vpc_name]
@@ -74,12 +74,12 @@ data "aws_vpc" "existing" {
 
 data "aws_subnets" "public" {
   count = var.create_vpc ? 0 : 1
-  
+
   filter {
     name   = "vpc-id"
     values = [data.aws_vpc.existing[0].id]
   }
-  
+
   filter {
     name   = "tag:Type"
     values = ["Public"]
@@ -88,12 +88,12 @@ data "aws_subnets" "public" {
 
 data "aws_subnets" "private" {
   count = var.create_vpc ? 0 : 1
-  
+
   filter {
     name   = "vpc-id"
     values = [data.aws_vpc.existing[0].id]
   }
-  
+
   filter {
     name   = "tag:Type"
     values = ["Private"]
@@ -102,9 +102,9 @@ data "aws_subnets" "private" {
 
 # Local values to use either created or existing resources
 locals {
-  vpc_id                    = var.create_vpc ? module.base_infra[0].vpc_id : data.aws_vpc.existing[0].id
-  public_subnet_ids         = var.create_vpc ? module.base_infra[0].public_subnet_ids : data.aws_subnets.public[0].ids
-  private_subnet_ids        = var.create_vpc ? module.base_infra[0].private_subnet_ids : data.aws_subnets.private[0].ids
+  vpc_id             = var.create_vpc ? module.base_infra[0].vpc_id : data.aws_vpc.existing[0].id
+  public_subnet_ids  = var.create_vpc ? module.base_infra[0].public_subnet_ids : data.aws_subnets.public[0].ids
+  private_subnet_ids = var.create_vpc ? module.base_infra[0].private_subnet_ids : data.aws_subnets.private[0].ids
 }
 
 
