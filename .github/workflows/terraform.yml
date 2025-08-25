@@ -307,6 +307,13 @@ jobs:
         run: terraform apply -input=false -var-file="${{ inputs.CLOUD_PROVIDER }}.tfvars" -no-color -auto-approve
         if: "${{ inputs.TERRAFORM_APPLY  == true }}"
         continue-on-error: true
+        env:
+          # PostgreSQL Password Update Environment Variables
+          AUTO_UPDATE_PASSWORD: "true"
+          GITHUB_REPO: ${{ github.repository }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: ${{ github.ref_name }}
+          POSTGRES_SECRET_ACTION: "skip"  # Non-interactive: skip if exists, create if new
 
       - name: Add the Terraform plan file / *.tfstate files / terraform format changes
         run: |
