@@ -31,11 +31,11 @@ nginx_node_ebs_volume_size = 300
 k8s_instance_root_volume_size = 64
 
 # Control-plane, ETCD, Worker
-k8s_control_plane_node_count = 3
+k8s_control_plane_node_count = 1
 # ETCD, Worker
-k8s_etcd_node_count = 3
+k8s_etcd_node_count = 1
 # Worker
-k8s_worker_node_count = 2
+k8s_worker_node_count = 1
 
 # Rancher Import Configuration
 enable_rancher_import = false
