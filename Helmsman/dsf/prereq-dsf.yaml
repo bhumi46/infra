@@ -99,7 +99,6 @@ apps:
     chart: mosip/rancher-logging
     wait: true
     priority: -1
-    timeout: 900
+    timeout: 1200
     hooks:
       postInstall: "$WORKDIR/hooks/post_logging-setup.sh"
-      postUpgrade: "$WORKDIR/hooks/post_logging-setup.sh"
