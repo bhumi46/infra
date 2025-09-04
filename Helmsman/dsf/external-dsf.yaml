@@ -41,7 +41,7 @@ apps:
     version: 13.1.5
     chart: bitnami/postgresql
     wait: true
-    priority: -17
+    priority: -16
     set:
       primary.extendedConfiguration: |
         max_connections=1000
