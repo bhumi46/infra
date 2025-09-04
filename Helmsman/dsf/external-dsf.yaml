@@ -71,7 +71,7 @@ apps:
     set:
       postgresHost: "postgres.soil0.mosip.net"
     wait: true
-    priority: -16
+    priority: -4
     timeout: 1200
 
   postgres-init:
