@@ -141,13 +141,13 @@ envVariables:
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_POSTGRES_HOST
     valueFrom:
       configMapKeyRef:
-        key: postgres-host
+        key: mosip-database-hostname-override
         name: postgres-setup-config
     enabled: true
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_POSTGRES_PORT
     valueFrom:
       configMapKeyRef:
-        key: postgres-port
+        key: mosip-database-port-override
         name: postgres-setup-config
     enabled: true
   - name: SPRING_CLOUD_CONFIG_SERVER_OVERRIDES_MOSIP_API_PUBLIC_HOST
