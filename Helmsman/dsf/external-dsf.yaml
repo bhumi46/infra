@@ -102,7 +102,7 @@ apps:
       databases.mosip_kernel.port: 5433
 
       databases.mosip_idmap.enabled: "true"
-      databases.mosip_idmap.branch: "release-1.2.2.x"
+      databases.mosip_idmap.branch: "v1.2.2.3"
       databases.mosip_idmap.host: "postgres.soil13.mosip.net"
       databases.mosip_idmap.port: 5433
 
@@ -112,7 +112,7 @@ apps:
       databases.mosip_prereg.port: 5433
 
       databases.mosip_idrepo.enabled: "true"
-      databases.mosip_idrepo.branch: "release-1.2.2.x"
+      databases.mosip_idrepo.branch: "v1.2.2.3"
       databases.mosip_idrepo.host: "postgres.soil13.mosip.net"
       databases.mosip_idrepo.port: 5433
 
@@ -122,7 +122,7 @@ apps:
       databases.mosip_ida.port: 5433
 
       databases.mosip_credential.enabled: "true"
-      databases.mosip_credential.branch: "release-1.2.2.x"
+      databases.mosip_credential.branch: "v1.2.2.3"
       databases.mosip_credential.host: "postgres.soil13.mosip.net"
       databases.mosip_credential.port: 5433
 
