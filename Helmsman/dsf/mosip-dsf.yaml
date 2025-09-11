@@ -355,6 +355,7 @@ apps:
     # set:
     #   image.repository: ""
     #   image.tag: ""
+    wait: true
     priority: -10
     timeout: 1200
 
@@ -432,7 +433,7 @@ apps:
   prereg-booking:
     namespace: prereg
     enabled: true
-    version: 12.0.3
+    version: 12.0.2
     chart: mosip/prereg-booking
     # set:
     #   image.repository: "mosipid/pre-registration-booking-service"
