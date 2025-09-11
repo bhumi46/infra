@@ -333,11 +333,11 @@ apps:
   syncdata:
     namespace: kernel
     enabled: true
-    version: 12.0.1
+    version: 12.1.3
     chart: mosip/syncdata
     set:
-      image.repository: "mosipid/kernel-syncdata-service"
-      image.tag: "1.2.1.2"
+      # image.repository: "mosipid/kernel-syncdata-service"
+      # image.tag: "1.2.1.2"
       resources.limits.cpu: "500m"
       resources.limits.memory: "5000Mi"
       resources.requests.cpu: "300m"
@@ -481,7 +481,7 @@ apps:
   idrepo-saltgen:
     namespace: idrepo
     enabled: true
-    version: 12.2.3-develop
+    version: v1.2.2.3
     chart: mosip/idrepo-saltgen
     # set:
     #   image.repository: ""
@@ -494,7 +494,7 @@ apps:
   credential:
     namespace: idrepo
     enabled: true
-    version: 12.2.3-develop
+    version: v1.2.2.3
     chart: mosip/credential
     set:
       # image.repository: "mosipid/credential-service"
@@ -509,7 +509,7 @@ apps:
   credentialrequest:
     namespace: idrepo
     enabled: true
-    version: 12.2.3-develop
+    version: v1.2.2.3
     chart: mosip/credentialrequest
     set:
       # image.repository: "mosipid/credential-request-generator"
@@ -525,7 +525,7 @@ apps:
   identity:
     namespace: idrepo
     enabled: true
-    version: 12.2.3-develop
+    version: v1.2.2.3
     chart: mosip/identity
     # set:
     #   image.repository: "mosipid/id-repository-identity-service"
@@ -536,7 +536,7 @@ apps:
   vid:
     namespace: idrepo
     enabled: true
-    version: 12.2.3-develop
+    version: v1.2.2.3
     chart: mosip/vid
     # set:
     #   image.repository: "mosipid/id-repository-vid-service"
