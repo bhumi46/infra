@@ -620,8 +620,8 @@ apps:
     version: 12.1.2
     chart: mosip/regproc-salt
     set:
-      # image.repository: "mosipdev/kernel-salt-generator"
-      # image.tag: "MOSIP-41674"
+      image.repository: "mosipid/kernel-salt-generator"
+      image.tag: "1.2.0.2"
     priority: -9
     timeout: 1200
 
