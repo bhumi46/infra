@@ -435,9 +435,9 @@ apps:
     enabled: true
     version: 12.0.2
     chart: mosip/prereg-booking
-    # set:
-    #   image.repository: "mosipid/pre-registration-booking-service"
-    #   image.tag: "1.2.0.2"
+    set:
+      image.repository: "mosipid/pre-registration-booking-service"
+      image.tag: "1.2.0.2"
     priority: -9
     timeout: 1200
 
