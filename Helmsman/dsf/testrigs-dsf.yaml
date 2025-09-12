@@ -62,12 +62,12 @@ apps:
 
       modules.prereg.enabled: true
       modules.prereg.image.repository: mosipid/apitest-prereg
-      modules.prereg.image.tag: v1.2.0.3
+      modules.prereg.image.tag: 1.2.0.3
       modules.prereg.image.pullPolicy: Always
 
       modules.masterdata.enabled: true
       modules.masterdata.image.repository: mosipid/apitest-masterdata
-      modules.masterdata.image.tag: v1.2.1.3
+      modules.masterdata.image.tag: 1.2.1.3
       modules.masterdata.image.pullPolicy: Always
 
       modules.idrepo.enabled: true
