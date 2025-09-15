@@ -392,8 +392,28 @@ jobs:
           if [ "${{ steps.destroy.outcome }}" = "success" ]; then
             echo "🎯 Destroy was successful - all state files should be cleaned up"
             echo "The cleanup step already removed all state files"
-            # For successful destroy, only commit removal of state files (no state files should exist)
+            
+            # For successful destroy, add all file deletions including kubeconfig files
             git add -u . 2>/dev/null || echo "No files to update"
+            
+            # Also stage removal of kubeconfig files across the repository
+            echo "Staging removal of kubeconfig files..."
+            find ../../../ -name "*CONTROL-PLANE-NODE-*.yaml" -type f -exec git rm --ignore-unmatch {} \; 2>/dev/null || echo "No kubeconfig files to remove from git"
+            
+            # Stage removal of cluster-specific config files in infra directories
+            # but exclude template and playbook files
+            find ../../../ -name "*.yaml" -path "*/terraform/implementations/*/infra/*" -exec bash -c '
+              file="$1"
+              filename="$(basename "$file")"
+              if [[ "$filename" =~ ^[a-zA-Z0-9-]+\.yaml$ ]] && 
+                 [[ "$filename" != "inventory.yml.tpl" ]] && 
+                 [[ "$filename" != "rke2-playbook.yml" ]] &&
+                 [[ "$filename" != *".tpl" ]] &&
+                 [[ "$filename" != *"playbook"* ]]; then
+                git rm --ignore-unmatch "$file" 2>/dev/null || true
+              fi
+            ' _ {} \;
+            
             echo "Only committing file deletions (no state files remain)"
           else
             echo "⚠️  Destroy failed - encrypting remaining state files for future debugging"
@@ -427,12 +447,12 @@ jobs:
             # Customize commit message based on backend type and destroy outcome
             if [ "${{ inputs.BACKEND_TYPE }}" = "local" ]; then
               if [ "${{ steps.destroy.outcome }}" = "success" ]; then
-                commit_msg="Terraform destroy cleanup GitHub Actions - ${{ inputs.CLOUD_PROVIDER }}-${{ inputs.TERRAFORM_COMPONENT }}"
+                commit_msg="Terraform destroy cleanup + kubeconfig removal GitHub Actions - ${{ inputs.CLOUD_PROVIDER }}-${{ inputs.TERRAFORM_COMPONENT }}"
               else
                 commit_msg="Terraform destroy (encrypted state) GitHub Actions - ${{ inputs.CLOUD_PROVIDER }}-${{ inputs.TERRAFORM_COMPONENT }}"
               fi
             else
-              commit_msg="Terraform destroy GitHub Actions - ${{ inputs.CLOUD_PROVIDER }}-${{ inputs.TERRAFORM_COMPONENT }}"
+              commit_msg="Terraform destroy + kubeconfig cleanup GitHub Actions - ${{ inputs.CLOUD_PROVIDER }}-${{ inputs.TERRAFORM_COMPONENT }}"
             fi
             
             git commit -s -am "$commit_msg"
@@ -448,6 +468,80 @@ jobs:
           echo "ERROR: Terraform destroy failed"
           echo "Check the logs above for detailed error information"
           exit 1
+
+      - name: Cleanup kubeconfig files and tools after successful destruction
+        if: ${{ steps.destroy.outcome == 'success' && inputs.TERRAFORM_COMPONENT == 'infra' }}
+        run: |
+          echo "🧹 Cleaning up kubeconfig files and kubectl/helm tools after successful destruction..."
+          
+          # Find and remove all CONTROL-PLANE-NODE kubeconfig files across the repository
+          echo "Searching for kubeconfig files to remove..."
+          find ../../../ -name "*CONTROL-PLANE-NODE-*.yaml" -type f -print0 | while IFS= read -r -d '' file; do
+            echo "Removing kubeconfig file: $file"
+            rm -f "$file"
+          done
+          
+          # Also remove any cluster-specific kubeconfig files from implementation directories
+          # but exclude template and playbook files
+          find ../../../ -name "*.yaml" -path "*/terraform/implementations/*/infra/*" -print0 | while IFS= read -r -d '' file; do
+            filename="$(basename "$file")"
+            # Only remove files that match cluster name pattern, exclude templates and playbooks
+            if [[ "$filename" =~ ^[a-zA-Z0-9-]+\.yaml$ ]] && 
+               [[ "$filename" != "inventory.yml.tpl" ]] && 
+               [[ "$filename" != "rke2-playbook.yml" ]] &&
+               [[ "$filename" != *".tpl" ]] &&
+               [[ "$filename" != *"playbook"* ]]; then
+              echo "Removing cluster config file: $file"
+              rm -f "$file"
+            fi
+          done
+          
+          # Remove kubeconfig files from ansible directories but preserve templates and playbooks
+          find ../../../ -name "*CONTROL-PLANE-NODE-*.yaml" -path "*/ansible/*" -type f -print0 | while IFS= read -r -d '' file; do
+            filename="$(basename "$file")"
+            # Exclude important template and playbook files
+            if [[ "$filename" != "inventory.yml.tpl" ]] && 
+               [[ "$filename" != "rke2-playbook.yml" ]] &&
+               [[ "$filename" != *".tpl" ]] &&
+               [[ "$filename" != *"playbook"* ]]; then
+              echo "Removing ansible kubeconfig file: $file"
+              rm -f "$file"
+            fi
+          done
+          
+          # Uninstall kubectl if installed
+          if command -v kubectl &> /dev/null; then
+            echo "Removing kubectl..."
+            sudo rm -f /usr/local/bin/kubectl
+            echo "kubectl removed"
+          else
+            echo "kubectl not found - skipping removal"
+          fi
+          
+          # Uninstall helm if installed
+          if command -v helm &> /dev/null; then
+            echo "Removing helm..."
+            sudo rm -f /usr/local/bin/helm
+            echo "helm removed"
+          else
+            echo "helm not found - skipping removal"
+          fi
+          
+          # Remove any kubernetes config directories
+          if [ -d ~/.kube ]; then
+            echo "Removing ~/.kube directory..."
+            rm -rf ~/.kube
+            echo "~/.kube directory removed"
+          fi
+          
+          # Remove any helm config directories
+          if [ -d ~/.helm ]; then
+            echo "Removing ~/.helm directory..."
+            rm -rf ~/.helm
+            echo "~/.helm directory removed"
+          fi
+          
+          echo "✅ Cleanup of kubeconfig files and tools completed successfully"
 
       - name: Terraform destroy success
         if: ${{ steps.destroy.outcome == 'success' }}
