@@ -1,7 +1,7 @@
 # Environment name (infra component)
-cluster_name = "soil23"
+cluster_name = "soil24"
 # MOSIP's domain (ex: sandbox.xyz.net)
-cluster_env_domain = "soil23.mosip.net"
+cluster_env_domain = "soil24.mosip.net"
 # Email-ID will be used by certbot to notify SSL certificate expiry via email
 mosip_email_id = "chandra.mishra@technoforte.co.in"
 # SSH login key name for AWS node instances (ex: my-ssh-key)
@@ -13,7 +13,7 @@ aws_provider_region = "ap-south-1"
 # If empty, uses all available AZs in the region
 # Example: ["ap-south-1a", "ap-south-1b"] for specific AZs
 # Example: [] for all available AZs in the region
-specific_availability_zones = []
+specific_availability_zones = [ap-south-1b]
 
 # The instance type for Kubernetes nodes (control plane, worker, etcd)
 k8s_instance_type = "t3a.2xlarge"
