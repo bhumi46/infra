@@ -69,7 +69,7 @@ apps:
     version: 0.1.0
     chart: $WORKDIR/utils/istio-addons/postgres-istio-addons-0.1.0.tgz
     set:
-      postgresHost: "postgres.soil16.mosip.net"
+      postgresHost: "postgres.soil22.mosip.net"
     wait: true
     priority: -4
     timeout: 1200
@@ -83,77 +83,77 @@ apps:
       dbUserPasswords.dbuserPassword: ""
       databases.mosip_master.enabled: "true"
       databases.mosip_master.branch: "v1.2.1.3"
-      databases.mosip_master.host: "postgres.soil16.mosip.net"
+      databases.mosip_master.host: "postgres.soil22.mosip.net"
       databases.mosip_master.port: 5433
 
       databases.mosip_audit.enabled: "true"
       databases.mosip_audit.branch: "v1.2.0.1"
-      databases.mosip_audit.host: "postgres.soil16.mosip.net"
+      databases.mosip_audit.host: "postgres.soil22.mosip.net"
       databases.mosip_audit.port: 5433
 
       databases.mosip_keymgr.enabled: "true"
       databases.mosip_keymgr.branch: "v1.2.1.0"
-      databases.mosip_keymgr.host: "postgres.soil16.mosip.net"
+      databases.mosip_keymgr.host: "postgres.soil22.mosip.net"
       databases.mosip_keymgr.port: 5433
 
       databases.mosip_kernel.enabled: "true"
       databases.mosip_kernel.branch: " v1.2.0.2"
-      databases.mosip_kernel.host: "postgres.soil16.mosip.net"
+      databases.mosip_kernel.host: "postgres.soil22.mosip.net"
       databases.mosip_kernel.port: 5433
 
       databases.mosip_idmap.enabled: "true"
       databases.mosip_idmap.branch: "v1.2.2.3"
-      databases.mosip_idmap.host: "postgres.soil16.mosip.net"
+      databases.mosip_idmap.host: "postgres.soil22.mosip.net"
       databases.mosip_idmap.port: 5433
 
       databases.mosip_prereg.enabled: "true"
       databases.mosip_prereg.branch: "v1.2.0.3"
-      databases.mosip_prereg.host: "postgres.soil16.mosip.net"
+      databases.mosip_prereg.host: "postgres.soil22.mosip.net"
       databases.mosip_prereg.port: 5433
 
       databases.mosip_idrepo.enabled: "true"
       databases.mosip_idrepo.branch: "v1.2.2.3"
-      databases.mosip_idrepo.host: "postgres.soil16.mosip.net"
+      databases.mosip_idrepo.host: "postgres.soil22.mosip.net"
       databases.mosip_idrepo.port: 5433
 
       databases.mosip_ida.enabled: "true"
       databases.mosip_ida.branch: "v1.2.1.2-beta.1"
-      databases.mosip_ida.host: "postgres.soil16.mosip.net"
+      databases.mosip_ida.host: "postgres.soil22.mosip.net"
       databases.mosip_ida.port: 5433
 
       databases.mosip_credential.enabled: "true"
       databases.mosip_credential.branch: "v1.2.2.3"
-      databases.mosip_credential.host: "postgres.soil16.mosip.net"
+      databases.mosip_credential.host: "postgres.soil22.mosip.net"
       databases.mosip_credential.port: 5433
 
       databases.mosip_regprc.enabled: "true"
       databases.mosip_regprc.branch: "v1.2.1.2"
-      databases.mosip_regprc.host: "postgres.soil16.mosip.net"
+      databases.mosip_regprc.host: "postgres.soil22.mosip.net"
       databases.mosip_regprc.port: 5433
 
       databases.mosip_pms.enabled: "true"
       databases.mosip_pms.branch: "release-1.3.x"
-      databases.mosip_pms.host: "postgres.soil16.mosip.net"
+      databases.mosip_pms.host: "postgres.soil22.mosip.net"
       databases.mosip_pms.port: 5433
 
       databases.mosip_hotlist.enabled: "true"
       databases.mosip_hotlist.branch: "v1.2.1.3"
-      databases.mosip_hotlist.host: "postgres.soil16.mosip.net"
+      databases.mosip_hotlist.host: "postgres.soil22.mosip.net"
       databases.mosip_hotlist.port: 5433
 
       databases.mosip_resident.enabled: "true"
       databases.mosip_resident.branch: "v1.2.1.2"
-      databases.mosip_resident.host: "postgres.soil16.mosip.net"
+      databases.mosip_resident.host: "postgres.soil22.mosip.net"
       databases.mosip_resident.port: 5433
 
       databases.mosip_otp.enabled: "true"
       databases.mosip_otp.branch: "release-1.3.x"
-      databases.mosip_otp.host: "postgres.soil16.mosip.net"
+      databases.mosip_otp.host: "postgres.soil22.mosip.net"
       databases.mosip_otp.port: 5433
 
       databases.mosip_digitalcard.enabled: "true"
       databases.mosip_digitalcard.branch: "v1.2.0.1"
-      databases.mosip_digitalcard.host: "postgres.soil16.mosip.net"
+      databases.mosip_digitalcard.host: "postgres.soil22.mosip.net"
       databases.mosip_digitalcard.port: 5433
     wait: true
     timeout: 1200
@@ -197,7 +197,7 @@ apps:
     version: 0.1.0
     chart: $WORKDIR/utils/istio-addons/iam-istio-addons-0.1.0.tgz
     set:
-      keycloakExternalHost: "iam.soil16.mosip.net"
+      keycloakExternalHost: "iam.soil22.mosip.net"
       keycloakInternalHost: "keycloak.keycloak"
       service: "keycloak"
     wait: true
@@ -212,9 +212,9 @@ apps:
     set:
       # image.repository: "mosipid/keycloak-init"
       # image.tag: "1.2.0.1"
-      keycloakExternalHost: "iam.soil16.mosip.net"
+      keycloakExternalHost: "iam.soil22.mosip.net"
       keycloakInternalHost: "keycloak.keycloak"
-      keycloak.realms.mosip.realm_config.attributes.frontendUrl: "https://iam.soil16.mosip.net/auth"
+      keycloak.realms.mosip.realm_config.attributes.frontendUrl: "https://iam.soil22.mosip.net/auth"
       keycloak.realms.mosip.realm_config.smtpServer.auth: "false"
       keycloak.realms.mosip.realm_config.smtpServer.host: "smtp.gmail.com"
       keycloak.realms.mosip.realm_config.smtpServer.port: "465"
@@ -275,7 +275,7 @@ apps:
     version: 1.2.0
     chart: $WORKDIR/utils/istio-addons/minio-istio-addons-1.2.0.tgz
     set:
-      externalHost: "minio.soil16.mosip.net"
+      externalHost: "minio.soil22.mosip.net"
     wait: true
     timeout: 1200
     hooks:
@@ -305,14 +305,14 @@ apps:
     chart: mosip/activemq-artemis
     set: 
       istio.enabled: "true"
-      istio.hosts[0]: "activemq.soil16.mosip.net"
+      istio.hosts[0]: "activemq.soil22.mosip.net"
       istio.ingressController.name: "ingressgateway-internal"
       istio.prefix: ""
     wait: true
     timeout: 1200
     priority: -8
     hooks:
-      postInstall: "$WORKDIR/hooks/captcha-setup.sh 6LeUiMYrAAAAAJpNqYAkY3GKC6pHjkPQXduy58UN 6LeUiMYrAAAAABLCxoT739u391tG5SbS0cTi0i-d 6LdticYrAAAAAIU0ghWpzK7C5MOD8Qmef0Kw3bVp 6LdticYrAAAAAIdFiCFQQf7Wz-bF0-g_Owqec4sU 6Ld8icYrAAAAAFxq0m9giAYnakECaKMWv6O5f_MC 6Ld8icYrAAAAAEbuRgWBQGtrXzpM8P_xRC1tnCiF"
+      postInstall: "$WORKDIR/hooks/captcha-setup.sh 6LcMKcorAAAAAEM1zo2OdFgXUt_NjhWUk2mxy-bC 6LcMKcorAAAAAAf1VOVehbD4nF_XFQoGyB0svaIi 6LcBKsorAAAAAIY58Pf8d207t_Yye54hZpPehC5A 6LcBKsorAAAAAC2BFjaFVAJihsvp12nrZ3yMuV6k 6LfaKsorAAAAAAfO4OpFOIBYzMNFf6K1aTZG3LYy 6LfaKsorAAAAAJiomr_SSAZJVdpKKybpNfZQtoV0"
   # Note: Create a google recaptcha v2 ("I am not a Robot") from Google Recaptcha Admin.
   # Pass the captcha site and secret key in the above post install script as an argument.To create site and secret key below is the link:
   # https://cloud.google.com/security/products/recaptcha
@@ -378,7 +378,7 @@ apps:
     version: 1.2.0
     chart: $WORKDIR/utils/istio-addons/kafka-istio-addons-1.2.0.tgz
     set:
-      kafkaUiHost: "kafka.soil16.mosip.net"
+      kafkaUiHost: "kafka.soil22.mosip.net"
       installName: "kafka-ui"
     wait: true
     timeout: 1200
@@ -393,28 +393,28 @@ apps:
     chart: mosip/landing-page
     set:
       landing.version: "develop"
-      landing.name: "soil16"
-      landing.api: "api.soil16.mosip.net"
-      landing.apiInternal: "api-internal.soil16.mosip.net"
-      landing.admin: "admin.soil16.mosip.net"
-      landing.prereg: "prereg.soil16.mosip.net"
-      landing.kafka: "kafka.soil16.mosip.net"
-      landing.kibana: "kibana.soil16.mosip.net"
-      landing.activemq: "activemq.soil16.mosip.net"
-      landing.minio: "minio.soil16.mosip.net"
-      landing.keycloak: "iam.soil16.mosip.net"
-      landing.regclient: "regclient.soil16.mosip.net"
-      landing.postgres.host: "postgres.soil16.mosip.net"
+      landing.name: "soil22"
+      landing.api: "api.soil22.mosip.net"
+      landing.apiInternal: "api-internal.soil22.mosip.net"
+      landing.admin: "admin.soil22.mosip.net"
+      landing.prereg: "prereg.soil22.mosip.net"
+      landing.kafka: "kafka.soil22.mosip.net"
+      landing.kibana: "kibana.soil22.mosip.net"
+      landing.activemq: "activemq.soil22.mosip.net"
+      landing.minio: "minio.soil22.mosip.net"
+      landing.keycloak: "iam.soil22.mosip.net"
+      landing.regclient: "regclient.soil22.mosip.net"
+      landing.postgres.host: "postgres.soil22.mosip.net"
       landing.postgres.port: "5433"
-      landing.compliance: "compliance.soil16.mosip.net"
-      landing.pmp: "pmp.soil16.mosip.net"
-      landing.resident: "resident.soil16.mosip.net"
-      landing.esignet: "esignet.soil16.mosip.net"
-      landing.smtp: "smtp.soil16.mosip.net"
-      landing.healthservices: "healthservices.soil16.mosip.net"
-      landing.injiweb: "injiweb.soil16.mosip.net"
-      landing.injiverify: "injiverify.soil16.mosip.net"
-      istio.host: "soil16.mosip.net"
+      landing.compliance: "compliance.soil22.mosip.net"
+      landing.pmp: "pmp.soil22.mosip.net"
+      landing.resident: "resident.soil22.mosip.net"
+      landing.esignet: "esignet.soil22.mosip.net"
+      landing.smtp: "smtp.soil22.mosip.net"
+      landing.healthservices: "healthservices.soil22.mosip.net"
+      landing.injiweb: "injiweb.soil22.mosip.net"
+      landing.injiverify: "injiverify.soil22.mosip.net"
+      istio.host: "soil22.mosip.net"
     wait: true
     timeout: 1200
     hooks:
