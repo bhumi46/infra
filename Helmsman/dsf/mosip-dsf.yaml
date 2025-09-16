@@ -243,6 +243,7 @@ apps:
     # set:
     #   image.repository: "mosipdev/kernel-auth-service"
     #   image.tag: "develop"
+    wait: true
     priority: -10
     timeout: 1200
 
@@ -255,6 +256,7 @@ apps:
     # set:
     #   image.repository: "mosipdev/kernel-auditmanager-service"
     #   image.tag: "release-1.3.x"
+    wait: true
     priority: -10
     timeout: 1200
 
@@ -290,6 +292,7 @@ apps:
       resources.requests.cpu: "200m"
       resources.requests.memory: "2000Mi"
       istio.corsPolicy.allowOrigins[0].exact: "https://admin.aoil38.mosip.net"
+    wait: true
     priority: -10
     timeout: 1200
 
@@ -302,6 +305,7 @@ apps:
     # set:
     #   image.repository: ""
     #   image.tag: ""
+    wait: true
     priority: -10
     timeout: 1200
 
@@ -314,6 +318,7 @@ apps:
     # set:
     #   image.repository: ""
     #   image.tag: ""
+    wait: true
     priority: -10
     timeout: 1200
 
@@ -326,6 +331,7 @@ apps:
     # set:
     #   image.repository: ""
     #   image.tag: ""
+    wait: true
     priority: -10
     timeout: 1200
 
@@ -343,6 +349,7 @@ apps:
       resources.requests.cpu: "300m"
       resources.requests.memory: "2500Mi"
       startupProbe.failureThreshold: "60"
+    wait: true
     priority: -10
     timeout: 1200
 
@@ -370,7 +377,8 @@ apps:
       # image.tag: "12.0.1"
       biosdk.zippedLibUrl: "http://artifactory.artifactory/artifactory/libs-release-local/biosdk/biosdk-lib.zip"
       biosdk.bioapiImpl: "io.mosip.mock.sdk.impl.SampleSDKV2"
-    priority: -9
+    wait: true
+    priority: -10
     timeout: 1200
 
   
@@ -382,7 +390,8 @@ apps:
     # set:
     #   image.repository: "mosipid/commons-packet-service"
     #   image.tag: "1.2.0.3"
-    priority: -9
+    wait: true
+    priority: -10
     timeout: 1200
 
 
@@ -394,7 +403,8 @@ apps:
     # set:
     #   image.repository: "mosipid/data-share-service"
     #   image.tag: "1.2.0.1"
-    priority: -9
+    wait: true
+    priority: -10
     timeout: 1200
 
   prereg-gateway:
