@@ -28,9 +28,9 @@ apps:
       # image.repository: "mosipqa/dsl-packetcreator"
       # image.tag: "1.2.1.x"
       resources.limits.cpu: "1"
-      resources.limits.memory: "3000Mi"
-      resources.requests.cpu: "700m"
-      resources.requests.memory: "2500Mi"
+      resources.limits.memory: "6000Mi"
+      resources.requests.cpu: "800m"
+      resources.requests.memory: "6000Mi"
       enable_insecure: false
       ingress.enabled: false
       ## If ingress enabled, provide ingress host value i.e., PACKETCREATOR_HOST
