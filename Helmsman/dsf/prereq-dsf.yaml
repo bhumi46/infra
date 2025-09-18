@@ -57,7 +57,13 @@ apps:
     version: 17.9.25
     chart: mosip/elasticsearch
     set:
+      image.repository: docker.io/mosipint/elasticsearch
+      image.tag: 7.17.2-debian-10-r4
+      # Kibana configuration and image
       global.kibanaEnabled: "true"
+      kibana.image.repository: docker.io/mosipint/kibana
+      kibana.image.tag: 7.17.2-debian-10-r0
+      kibana.image.pullPolicy: IfNotPresent
       data.heapSize: "728m"
       data.persistence.enabled: "true"
       data.persistence.size: "64Gi"
@@ -67,7 +73,7 @@ apps:
       master.persistence.size: "4Gi"
       master.resources.requests.memory: "728Mi"
       kibana.persistence.enabled: "false"
-      sysctlImage.repository: "bitnami/os-shell"
+      sysctlImage.repository: "mosipint/os-shell"
       sysctlImage.tag: "12-debian-12-r46"
     wait: true
     timeout: 900
