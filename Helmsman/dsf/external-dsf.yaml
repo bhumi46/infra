@@ -167,6 +167,11 @@ apps:
     set:
       image.repository: "mosipid/mosip-artemis-keycloak"
       image.tag: "1.2.0.1"
+      # Override Postgres image
+      postgresql.image.registry: "docker.io"
+      postgresql.image.repository: "mosipint/postgresql"
+      postgresql.image.tag: "14.2.0-debian-10-r70"
+
       image.pullPolicy: "Always"
       service.type: "ClusterIP"
       auth.adminUser: "admin"
@@ -259,6 +264,8 @@ apps:
     version: 10.1.6
     chart: mosip/minio
     set:
+      image.repository: "mosipint/minio"
+      image.tag: "2022.2.7-debian-10-r0"
       metrics.serviceMonitor.enabled: "true"
       extraEnvVars[0].name: "MINIO_PROMETHEUS_URL"
       extraEnvVars[0].value: "http://rancher-monitoring-prometheus.cattle-monitoring-system:9090"
@@ -324,6 +331,11 @@ apps:
     version: 18.3.1
     chart: bitnami/kafka
     set:
+      # Add these for image overrides
+      image.repository: "docker.io/mosipint/kafka"
+      image.tag: "3.2.1-debian-11-r9"
+      zookeeper.image.repository: "docker.io/mosipint/zookeeper"
+      zookeeper.image.tag: "3.8.0-debian-11-r30"
       clusterDomain: "cluster.local"
       logRetentionBytes: "_1073741824"
       defaultReplicationFactor: "3"
@@ -360,6 +372,9 @@ apps:
     version: 0.4.2
     chart: kafka-ui/kafka-ui
     set:
+      # Add these for image overrides
+      # image.repository: "docker.io/provectuslabs/kafka-ui"
+      # image.tag: "v0.4.0"
       envs.config.KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: "kafka.kafka:9092"
       envs.config.KAFKA_CLUSTERS_0_NAME: "main_kafka"
       envs.config.KAFKA_CLUSTERS_0_ZOOKEEPER: "kafka-zookeeper.kafka:2181"
