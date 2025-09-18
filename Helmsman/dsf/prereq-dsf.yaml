@@ -57,12 +57,12 @@ apps:
     version: 17.9.25
     chart: mosip/elasticsearch
     set:
-      image.repository: docker.io/mosipint/elasticsearch
-      image.tag: 7.17.2-debian-10-r4
+      image.repository: "mosipint/elasticsearch"
+      image.tag: "7.17.2-debian-10-r4"
       # Kibana configuration and image
       global.kibanaEnabled: "true"
-      kibana.image.repository: docker.io/mosipint/kibana
-      kibana.image.tag: 7.17.2-debian-10-r0
+      kibana.image.repository: "mosipint/kibana"
+      kibana.image.tag: "7.17.2-debian-10-r0"
       kibana.image.pullPolicy: IfNotPresent
       data.heapSize: "728m"
       data.persistence.enabled: "true"
