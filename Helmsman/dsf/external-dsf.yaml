@@ -42,8 +42,7 @@ apps:
     chart: bitnami/postgresql
     wait: true
     priority: -16
-    valuesFiles:
-      - postgres-values.yaml
+    valuesFiles: "$WORKDIR/utils/postgres-values.yaml"
     timeout: 1200
 
   istio-addons-psql:
