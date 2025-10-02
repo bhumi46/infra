@@ -62,7 +62,7 @@ apps:
     version: 12.0.1
     chart: mosip/postgres-init
     set:
-      image.registry: "harbor.mosip.net" 
+      image.repository: "harbor.mosip.net/mosipid/postgres-init"
       dbUserPasswords.dbuserPassword: ""
       databases.mosip_master.enabled: "true"
       databases.mosip_master.branch: "v1.2.1.3"
@@ -153,8 +153,7 @@ apps:
       image.tag: "1.2.0.1"
       image.pullPolicy: "Always"
       # Override Postgres image
-      postgresql.image.registry: "docker.io"
-      postgresql.image.repository: "mosipint/postgresql"
+      postgresql.image.repository: "harbor.mosip.net/mosipint/postgresql"
       postgresql.image.tag: "14.2.0-debian-10-r70"
       service.type: "ClusterIP"
       auth.adminUser: "admin"
@@ -198,8 +197,7 @@ apps:
     version: 12.0.2-develop
     chart: mosip/keycloak-init
     set:
-      image.registry: "harbor.mosip.net"  
-      # image.repository: "mosipid/keycloak-init"
+      image.repository: "harbor.mosip.net/mosipid/keycloak-init"
       # image.tag: "1.2.0.1"
       keycloakExternalHost: "iam.soil45.mosip.net"
       keycloakInternalHost: "keycloak.keycloak"
