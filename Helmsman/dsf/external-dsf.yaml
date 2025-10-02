@@ -395,7 +395,6 @@ apps:
     version: 12.0.2
     chart: mosip/landing-page
     set:
-      image.registry: "harbor.mosip.net"
       landing.version: "develop"
       landing.name: "soil45"
       landing.api: "api.soil45.mosip.net"
