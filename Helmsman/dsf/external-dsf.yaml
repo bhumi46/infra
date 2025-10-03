@@ -153,6 +153,7 @@ apps:
       image.tag: "1.2.0.1"
       image.pullPolicy: "Always"
       # Override Postgres image
+      postgresql.image.registry: "harbor.mosip.net"
       postgresql.image.repository: "mosipint/postgresql"
       postgresql.image.tag: "14.2.0-debian-10-r70"
       service.type: "ClusterIP"
