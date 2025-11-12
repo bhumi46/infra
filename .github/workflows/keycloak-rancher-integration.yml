@@ -60,6 +60,7 @@ on:
 jobs:
   setup-integration:
     runs-on: ubuntu-latest
+    environment: ${{ github.ref_name }}
     
     steps:
       - name: Checkout repository
