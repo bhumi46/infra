@@ -45,7 +45,7 @@ on:
 permissions:
   actions: write
   contents: read
-  environments: write
+  secrets: write
 
 jobs:
   validate-inputs:
