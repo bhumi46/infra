@@ -8,18 +8,18 @@ helmRepos:
   mosip: https://mosip.github.io/mosip-helm
 
 # Apitestrigs deploy into service namespaces (no dedicated testrig namespaces):
-#   esignet-apitestrig            → esignet ns
-#   esignet-cre-apitestrig        → esignet-cre ns
-#   esignet-qa11-apitestrig       → esignet-qa11 ns
-#   esignet-sunbird-apitestrig    → esignet-sunbird ns
-#   esignet-signup-apitestrig     → signup ns        (disabled — enable if signup deployed)
-#   signup-uitestrig              → signup-uitestrig  (disabled — enable if signup deployed)
+#   esignet-apitestrig              → esignet ns
+#   esignet-mosipid1-apitestrig     → ${MOSIPID1_NS}
+#   esignet-mosipid2-apitestrig     → ${MOSIPID2_NS}
+#   esignet-sunbird-apitestrig      → esignet-sunbird ns
+#   esignet-signup-apitestrig       → signup ns        (disabled — enable if signup deployed)
+#   signup-uitestrig                → signup-uitestrig  (disabled — enable if signup deployed)
 namespaces:
-  esignet-cre:
+  ${MOSIPID1_NS}:
     protected: false
   esignet:
     protected: false
-  esignet-qa11:
+  ${MOSIPID2_NS}:
     protected: false
   esignet-sunbird:
     protected: false
@@ -75,10 +75,10 @@ apps:
       preInstall: "$WORKDIR/hooks/esignet-standalone/apitestrig-esignet-setup.sh"
 
   # ---------------------------------------------------------------------------
-  # eSignet API Testrig — esignet-cre namespace (mosip-identity-plugin)
+  # eSignet API Testrig — mosipid1 namespace (mosip-identity-plugin)
   # ---------------------------------------------------------------------------
-  esignet-cre-apitestrig:
-    namespace: esignet-cre
+  esignet-mosipid1-apitestrig:
+    namespace: ${MOSIPID1_NS}
     enabled: true
     version: 0.0.1-develop
     chart: mosip/apitestrig
@@ -88,16 +88,16 @@ apps:
       extraEnvVarsCM[1]: "s3"
       extraEnvVarsCM[2]: "keycloak-host"
       extraEnvVarsCM[3]: "db"
-      extraEnvVarsCM[4]: "apitestrig"    
-      extraEnvVarsSecret[0]: "apitestrig-esignet-cre-apitestrig"
-      extraEnvVarsSecret[1]: "s3-esignet-cre-apitestrig"
+      extraEnvVarsCM[4]: "apitestrig"
+      extraEnvVarsSecret[0]: "apitestrig-esignet-mosipid1-apitestrig"
+      extraEnvVarsSecret[1]: "s3-esignet-mosipid1-apitestrig"
       extraEnvVarsSecret[2]: "keycloak-client-secrets"
       extraEnvVarsSecret[3]: "postgres-postgresql"
       crontime: "0 2 * * *"
       apitestrig.configmaps.s3.s3-host: 'http://minio.minio:9000'
       apitestrig.configmaps.s3.s3-user-key: 'admin'
       apitestrig.configmaps.s3.s3-region: ''
-      apitestrig.configmaps.db.db-server: "api-internal.${cre_domain_name}"
+      apitestrig.configmaps.db.db-server: "api-internal.${MOSIPID1_DOMAIN}"
       apitestrig.configmaps.db.db-su-user: "postgres"
       apitestrig.configmaps.db.db-port: "${esignet_db_port}"
       apitestrig.configmaps.apitestrig.ENV_USER: "api-internal.${env_name}"
@@ -106,25 +106,25 @@ apps:
       apitestrig.configmaps.apitestrig.reportExpirationInDays: "3"
       apitestrig.configmaps.apitestrig.slack-webhook-url: "${SLACK_WEBHOOK_URL}"
       apitestrig.configmaps.apitestrig.eSignetDeployed: "yes"
-      apitestrig.configmaps.apitestrig.NS: "esignet-cre"
+      apitestrig.configmaps.apitestrig.NS: "${MOSIPID1_NS}"
       apitestrig.configmaps.apitestrig.servicesNotDeployed: 'sunbirdrc'
       apitestrig.configmaps.apitestrig.uinGenerationProcessingDelayTimeInMilliSeconds: "90000"
       apitestrig.configmaps.apitestrig.vidGenerationProcessingDelayTimeInMilliSeconds: "90000"
       apitestrig.configmaps.apitestrig.uinGenMaxLoopCount: "20"
-      apitestrig.configmaps.apitestrig.eSignetbaseurl: "https://esignet-cre.${domain_name}"
+      apitestrig.configmaps.apitestrig.eSignetbaseurl: "https://esignet-mosipid1.${domain_name}"
       apitestrig.configmaps.apitestrig.esignetActuatorPropertySection: "classpath:/application-default.properties"
-      apitestrig.configmaps.apitestrig.mosip_components_base_urls: "auditmanager=api-internal.${cre_domain_name};idrepository=api-internal.${cre_domain_name};authmanager=api-internal.${cre_domain_name};resident=api-internal.${cre_domain_name};partnermanager=pms-partner-cre.${cre_domain_name};idauthentication=api-internal.${cre_domain_name};masterdata=api-internal.${cre_domain_name};idgenerator=api-internal.${cre_domain_name};policymanager=pms-partner-cre.${cre_domain_name};preregistration=api-internal.${cre_domain_name};keymanager=api-internal.${cre_domain_name};"
+      apitestrig.configmaps.apitestrig.mosip_components_base_urls: "auditmanager=api-internal.${MOSIPID1_DOMAIN};idrepository=api-internal.${MOSIPID1_DOMAIN};authmanager=api-internal.${MOSIPID1_DOMAIN};resident=api-internal.${MOSIPID1_DOMAIN};partnermanager=pms-mosipid1.${MOSIPID1_DOMAIN};idauthentication=api-internal.${MOSIPID1_DOMAIN};masterdata=api-internal.${MOSIPID1_DOMAIN};idgenerator=api-internal.${MOSIPID1_DOMAIN};policymanager=pms-mosipid1.${MOSIPID1_DOMAIN};preregistration=api-internal.${MOSIPID1_DOMAIN};keymanager=api-internal.${MOSIPID1_DOMAIN};"
       secrets.s3.s3-user-secret: "${MINIO_ROOT_PASSWORD}"
       apitestrig.variables.push_reports_to_s3: "yes"
     priority: -4
     hooks:
-      preInstall: "$WORKDIR/hooks/esignet-standalone/apitestrig-esignet-cre-setup.sh"
+      preInstall: "env ESIGNET_NS=${MOSIPID1_NS} $WORKDIR/hooks/esignet-standalone/apitestrig-esignet-mosipid-setup.sh"
 
   # ---------------------------------------------------------------------------
-  # eSignet API Testrig — esignet-qa11 namespace (mosip-identity-plugin)
+  # eSignet API Testrig — mosipid2 namespace (mosip-identity-plugin)
   # ---------------------------------------------------------------------------
-  esignet-qa11-apitestrig:
-    namespace: esignet-qa11
+  esignet-mosipid2-apitestrig:
+    namespace: ${MOSIPID2_NS}
     enabled: true
     version: 0.0.1-develop
     chart: mosip/apitestrig
@@ -134,16 +134,16 @@ apps:
       extraEnvVarsCM[1]: "s3"
       extraEnvVarsCM[2]: "keycloak-host"
       extraEnvVarsCM[3]: "db"
-      extraEnvVarsCM[4]: "apitestrig"    
-      extraEnvVarsSecret[0]: "apitestrig-esignet-qa11-apitestrig"
-      extraEnvVarsSecret[1]: "s3-esignet-qa11-apitestrig"
+      extraEnvVarsCM[4]: "apitestrig"
+      extraEnvVarsSecret[0]: "apitestrig-esignet-mosipid2-apitestrig"
+      extraEnvVarsSecret[1]: "s3-esignet-mosipid2-apitestrig"
       extraEnvVarsSecret[2]: "keycloak-client-secrets"
       extraEnvVarsSecret[3]: "postgres-postgresql"
       crontime: "0 2 * * *"
       apitestrig.configmaps.s3.s3-host: 'http://minio.minio:9000'
       apitestrig.configmaps.s3.s3-user-key: 'admin'
       apitestrig.configmaps.s3.s3-region: ''
-      apitestrig.configmaps.db.db-server: "api-internal.${qa11_domain_name}"
+      apitestrig.configmaps.db.db-server: "api-internal.${MOSIPID2_DOMAIN}"
       apitestrig.configmaps.db.db-su-user: "postgres"
       apitestrig.configmaps.db.db-port: "${esignet_db_port}"
       apitestrig.configmaps.apitestrig.ENV_USER: "api-internal.${env_name}"
@@ -152,19 +152,19 @@ apps:
       apitestrig.configmaps.apitestrig.reportExpirationInDays: "3"
       apitestrig.configmaps.apitestrig.slack-webhook-url: "${SLACK_WEBHOOK_URL}"
       apitestrig.configmaps.apitestrig.eSignetDeployed: "yes"
-      apitestrig.configmaps.apitestrig.NS: "esignet-qa11"
+      apitestrig.configmaps.apitestrig.NS: "${MOSIPID2_NS}"
       apitestrig.configmaps.apitestrig.servicesNotDeployed: 'sunbirdrc'
       apitestrig.configmaps.apitestrig.uinGenerationProcessingDelayTimeInMilliSeconds: "90000"
       apitestrig.configmaps.apitestrig.vidGenerationProcessingDelayTimeInMilliSeconds: "90000"
       apitestrig.configmaps.apitestrig.uinGenMaxLoopCount: "20"
-      apitestrig.configmaps.apitestrig.eSignetbaseurl: "https://esignet-qa11.${domain_name}"
+      apitestrig.configmaps.apitestrig.eSignetbaseurl: "https://esignet-mosipid2.${domain_name}"
       apitestrig.configmaps.apitestrig.esignetActuatorPropertySection: "classpath:/application-default.properties"
-      apitestrig.configmaps.apitestrig.mosip_components_base_urls: "auditmanager=api-internal.${qa11_domain_name};idrepository=api-internal.${qa11_domain_name};authmanager=api-internal.${qa11_domain_name};resident=api-internal.${qa11_domain_name};partnermanager=pms-partner-cre.${qa11_domain_name};idauthentication=api-internal.${qa11_domain_name};masterdata=api-internal.${qa11_domain_name};idgenerator=api-internal.${qa11_domain_name};policymanager=pms-partner-cre.${qa11_domain_name};preregistration=api-internal.${qa11_domain_name};keymanager=api-internal.${qa11_domain_name};"
+      apitestrig.configmaps.apitestrig.mosip_components_base_urls: "auditmanager=api-internal.${MOSIPID2_DOMAIN};idrepository=api-internal.${MOSIPID2_DOMAIN};authmanager=api-internal.${MOSIPID2_DOMAIN};resident=api-internal.${MOSIPID2_DOMAIN};partnermanager=pms-mosipid2.${MOSIPID2_DOMAIN};idauthentication=api-internal.${MOSIPID2_DOMAIN};masterdata=api-internal.${MOSIPID2_DOMAIN};idgenerator=api-internal.${MOSIPID2_DOMAIN};policymanager=pms-mosipid2.${MOSIPID2_DOMAIN};preregistration=api-internal.${MOSIPID2_DOMAIN};keymanager=api-internal.${MOSIPID2_DOMAIN};"
       secrets.s3.s3-user-secret: "${MINIO_ROOT_PASSWORD}"
       apitestrig.variables.push_reports_to_s3: "yes"
     priority: -3
     hooks:
-      preInstall: "$WORKDIR/hooks/esignet-standalone/apitestrig-esignet-qa11-setup.sh"
+      preInstall: "env ESIGNET_NS=${MOSIPID2_NS} $WORKDIR/hooks/esignet-standalone/apitestrig-esignet-mosipid-setup.sh"
 
   # ---------------------------------------------------------------------------
   # eSignet API Testrig — esignet-sunbird namespace (sunbird-rc-plugin)
@@ -206,7 +206,7 @@ apps:
       apitestrig.configmaps.apitestrig.uinGenMaxLoopCount: "20"
       apitestrig.configmaps.apitestrig.eSignetbaseurl: "https://esignet-sunbird.${domain_name}"
       apitestrig.configmaps.apitestrig.esignetActuatorPropertySection: "classpath:/application-default.properties"
-      apitestrig.configmaps.apitestrig.sunBirdBaseURL: "https://registry.${cre_domain_name}"
+      apitestrig.configmaps.apitestrig.sunBirdBaseURL: "https://registry.${SUNBIRD_DOMAIN}"
       secrets.s3.s3-user-secret: "${MINIO_ROOT_PASSWORD}"
       apitestrig.variables.push_reports_to_s3: "yes"
     priority: -2
