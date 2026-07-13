@@ -11,6 +11,7 @@ Applies to any Claude Code session working in this repo:
 5. **Attach a confidence level** (High / Medium / Low) to non-trivial suggestions or diagnoses.
 6. **Root-cause explanations are evidence-bound** — base them only on the logs/config the user actually shares, not on speculation about what "probably" happened.
 7. **Commits**: always `git commit -s` (sign-off) using this repo's configured git identity — `bhumi46 <thisisbn46@gmail.com>` — never a Claude/Anthropic co-author trailer.
+8. **Push only to `origin`** (the `bhumi46/infra` fork), **never `upstream`** (`mosip/infra`). Verify the target remote before every push — never push to, or open PRs against, `upstream` without the user explicitly asking.
 
 ---
 
